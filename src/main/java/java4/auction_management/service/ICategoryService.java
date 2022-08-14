@@ -1,4 +1,9 @@
 package java4.auction_management.service;
 
-public interface ICategoryService {
+import java4.auction_management.entity.category.Category;
+
+import java.util.List;
+
+public interface ICategoryService extends IService<Category, Long>{
+
 }

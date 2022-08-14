@@ -1,6 +1,7 @@
 package java4.auction_management.entity.bill;
 
 import java4.auction_management.entity.cart.Cart;
+import java4.auction_management.entity.cart.CartDetail;
 import java4.auction_management.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,19 +20,25 @@ import java.time.LocalDateTime;
 public class Bill {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long billId;
 
     private LocalDateTime timeBill;
 
     private String deliveryAddress;
 
-    private String paymentMethod;
+    private EShipping shippingMethod;
 
-    private String shippingMethod;
+    @Column(columnDefinition = "default 'WAITING'")
+    @Enumerated(EnumType.STRING)
+    private ETransport eTransport = ETransport.WAITING;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    private CartDetail cartDetail;
+
+    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne
-    private Cart cart;
+
 }

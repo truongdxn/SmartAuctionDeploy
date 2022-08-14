@@ -1,16 +1,23 @@
 package java4.auction_management.entity.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java4.auction_management.entity.bid.Bid;
+import java4.auction_management.entity.auction.Auction;
+import java4.auction_management.entity.auction.EStatus;
+import java4.auction_management.entity.cart.Cart;
+import java4.auction_management.entity.cart.CartDetail;
 import java4.auction_management.entity.category.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,35 +26,39 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class Product {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
 
-    private String name;
+    @NotBlank(message = "product name not empty")
+    private String productName;
 
-    private double reservePrice;
+    @NotBlank(message = "description not empty")
+    private String description;
 
-    private LocalTime timeAuction;
+    @Column(length = 1000)
+    private String listImage;
 
-    private LocalTime timeFinish;
+    private LocalDateTime datePost;
 
-    private int stepPrice;
+    private boolean isSold;
 
-    private double currentPrice;
-
-    private String productInfo;
-
-    @Column(length = 500)
-    private String productImage;
-
-    private boolean isApprove;
-
-    private String productStatus;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
     private Category category;
 
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
+
     @OneToOne(mappedBy = "product")
-    @JsonIgnore
-    private Bid bid;
+    private CartDetail cartDetail;
 
-
+    @Override
+    public String toString() {
+        return "{" +
+                "\"productId\":" + productId +
+                ", \"productName\": \"" + productName + '\"' +
+                '}';
+    }
 }

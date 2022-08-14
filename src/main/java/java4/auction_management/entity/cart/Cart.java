@@ -21,25 +21,15 @@ import java.util.List;
 public class Cart {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cartId;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartDetail> cartDetailList;
+
+    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "cartDetail",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> productList;
-
-    @OneToMany(mappedBy = "cart")
-    private List<Bill> billList;
-
-
-
-
 
 
 }
