@@ -1,1 +1,1 @@
-web: java --add-opens java.base/java.lang=ALL-UNNAMED -jar out/artifacts/Project_OJT_Spring_jar/Project-OJT-Spring.jar
+web: java -jar out/artifacts/Project_OJT_Spring_jar/Project-OJT-Spring.jar
