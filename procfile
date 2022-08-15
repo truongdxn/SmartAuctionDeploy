@@ -1,1 +1,0 @@
-web: java --permit-illegal-access -jar out/artifacts/Project_OJT_Spring_jar/Project-OJT-Spring.jar

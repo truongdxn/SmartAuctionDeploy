@@ -14,8 +14,9 @@
     <name>Project-OJT-Spring</name>
     <description>Project-OJT-Spring</description>
     <properties>
-        <java.version>18</java.version>
+        <jvm.options>--illegal-access=permit</jvm.options>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -237,6 +238,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
 
 </project>
